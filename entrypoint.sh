@@ -17,25 +17,25 @@ set -e
 
 # Set options based on user input and handle defaults.
 
-if [ -z "$INPUT_DESTINATION_PATH" ] || [ "$INPUT_DESTINATION_PATH" == "" ]; then
+if [ -z "$INPUT_DESTINATION_PATH" ]; then
 	WP_PPM_DESTINATION_PATH="./languages"
 else
 	WP_PPM_DESTINATION_PATH=$INPUT_DESTINATION_PATH
 fi
 
-if [ -z "$INPUT_SLUG" ] || [ "$INPUT_SLUG" == "" ]; then
+if [ -z "$INPUT_SLUG" ]; then
 	WP_PPM_SLUG=${GITHUB_REPOSITORY#*/}
 else
 	WP_PPM_SLUG=$INPUT_SLUG
 fi
 
-if [ -z "$INPUT_TEXT_DOMAIN" ] || [ "$INPUT_TEXT_DOMAIN" == "" ]; then
+if [ -z "$INPUT_TEXT_DOMAIN" ]; then
 	WP_PPM_TEXT_DOMAIN=$WP_PPM_SLUG
 else
 	WP_PPM_TEXT_DOMAIN=$INPUT_TEXT_DOMAIN
 fi
 
-if [ -z "$INPUT_GENERATE_POT" ] || [ "$INPUT_GENERATE_POT" == "1" ] || [ "$INPUT_GENERATE_POT" == "" ]; then
+if [ -z "$INPUT_GENERATE_POT" ] || [ "$INPUT_GENERATE_POT" == "1" ]; then
 	WP_PPM_GENERATE_POT=true
 else
 	WP_PPM_GENERATE_POT=false
@@ -59,13 +59,13 @@ else
 	WP_PPM_GENERATE_LANG_PACKS=true
 fi
 
-if [ -z "$INPUT_MERGE_CHANGES" ] || [ "$INPUT_MERGE_CHANGES" == "0" ] || [ "$INPUT_MERGE_CHANGES" == "" ]; then
+if [ -z "$INPUT_MERGE_CHANGES" ] || [ "$INPUT_MERGE_CHANGES" == "0" ]; then
 	WP_PPM_MERGE_CHANGES=""
 else
 	WP_PPM_MERGE_CHANGES="--merge"
 fi
 
-if [ -z "$INPUT_HEADERS" ] || [ "$INPUT_HEADERS" == "" ]; then
+if [ -z "$INPUT_HEADERS" ]; then
 	WP_PPM_HEADERS="{}"
 else
 	WP_PPM_HEADERS=$INPUT_HEADERS
@@ -123,6 +123,12 @@ if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
 	# Output more information that we just added.
 	echo "ℹ️ WP_PPM_IS_FORK: $WP_PPM_IS_FORK"
 	echo "ℹ️ WP_PPM_CAN_MODIFY_PR: $WP_PPM_CAN_MODIFY_PR"
+fi
+
+# Handle manual dispatches and other cases where branch is not set.
+if [ -z "$GITHUB_HEAD_REF" ]; then
+  # Set the head ref var.
+  GITHUB_HEAD_REF=$GITHUB_REF
 fi
 
 # Output more information that we have.
