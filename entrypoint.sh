@@ -137,6 +137,8 @@ echo ""
 echo "========================================"
 echo ""
 
+echo "Checking to see if destination path exists..."
+
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
 	echo "🔨 Creating path: $WP_PPM_DESTINATION_PATH"
@@ -153,6 +155,8 @@ echo ""
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+echo "Determining if we need to checkout..."
 
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
@@ -337,13 +341,28 @@ else
 	echo "⏭ Skipping language pack generation"
 fi
 
+echo ""
 echo "========================================"
 echo "== Git ================================="
 echo "========================================"
+echo ""
 
 # Commit the changes.
 echo "🔼 Committing and pushing change(s) to repository"
+
+echo ""
+echo "== Running: git commit ================="
+echo ""
+
 git commit --allow-empty -m "🔄 Regenerate translation files"
+
+echo ""
+echo "========================================"
+echo ""
+
+echo ""
+echo "== Running: git push ==================="
+echo ""
 
 if [ "$WP_PPM_IS_FORK" == true ]; then
   # Handle forks.
@@ -353,6 +372,10 @@ else
   # Handle normal checkouts.
 	git push "https://x-access-token:$GITHUB_TOKEN@github.com/$WP_PPM_REPO_NAME"
 fi
+
+echo ""
+echo "========================================"
+echo ""
 
 echo "✅ All changes committed and pushed to repository"
 
