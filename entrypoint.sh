@@ -159,8 +159,11 @@ echo "Making sure we are on the correct checkout..."
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
   echo "🆗️ Git already checked out to correct branch"
+
+  # Fetch the latest from the branch.
+  git pull
 else
-  # Checkout to PR branch
+  # Checkout to PR branch.
   echo "🔨 Fetching remote and checking out"
 
   git config "branch.$GITHUB_HEAD_REF.remote" "$WP_PPM_REMOTE"
