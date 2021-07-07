@@ -88,17 +88,18 @@ echo "========================================"
 echo "== WP POT/PO/MO Generator =============="
 echo "========================================"
 echo "========================================"
+echo ""
 
 # Output information from this run.
-echo "ℹ️ GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
-echo "ℹ️ GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
-echo "ℹ️ WP_PPM_DESTINATION_PATH: $WP_PPM_DESTINATION_PATH"
-echo "ℹ️ WP_PPM_SLUG: $WP_PPM_SLUG"
-echo "ℹ️ WP_PPM_TEXT_DOMAIN: $WP_PPM_TEXT_DOMAIN"
-echo "ℹ️ WP_PPM_POT_PATH: $WP_PPM_POT_PATH"
-echo "ℹ️ WP_PPM_PO_PATH: $WP_PPM_PO_PATH"
-echo "ℹ️ WP_PPM_MO_PATH: $WP_PPM_MO_PATH"
-echo "ℹ️ WP_PPM_LANG_PACKS_BASE_PATH: $WP_PPM_LANG_PACKS_BASE_PATH"
+echo "* GITHUB_EVENT_NAME: $GITHUB_EVENT_NAME"
+echo "* GITHUB_EVENT_PATH: $GITHUB_EVENT_PATH"
+echo "* WP_PPM_DESTINATION_PATH: $WP_PPM_DESTINATION_PATH"
+echo "* WP_PPM_SLUG: $WP_PPM_SLUG"
+echo "* WP_PPM_TEXT_DOMAIN: $WP_PPM_TEXT_DOMAIN"
+echo "* WP_PPM_POT_PATH: $WP_PPM_POT_PATH"
+echo "* WP_PPM_PO_PATH: $WP_PPM_PO_PATH"
+echo "* WP_PPM_MO_PATH: $WP_PPM_MO_PATH"
+echo "* WP_PPM_LANG_PACKS_BASE_PATH: $WP_PPM_LANG_PACKS_BASE_PATH"
 
 WP_PPM_REPO_NAME="$GITHUB_REPOSITORY"
 WP_PPM_REMOTE="origin"
@@ -123,15 +124,18 @@ if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
 	fi
 
 	# Output more information that we just added.
-	echo "ℹ️ WP_PPM_IS_FORK: $WP_PPM_IS_FORK"
-	echo "ℹ️ WP_PPM_CAN_MODIFY_PR: $WP_PPM_CAN_MODIFY_PR"
+	echo "* WP_PPM_IS_FORK: $WP_PPM_IS_FORK"
+	echo "* WP_PPM_CAN_MODIFY_PR: $WP_PPM_CAN_MODIFY_PR"
 fi
 
 # Output more information that we have.
-echo "ℹ️ WP_PPM_REMOTE: $WP_PPM_REMOTE"
-echo "ℹ️ GITHUB_REF: $GITHUB_REF"
-echo "ℹ️ GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
+echo "* WP_PPM_REMOTE: $WP_PPM_REMOTE"
+echo "* GITHUB_REF: $GITHUB_REF"
+echo "* GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
+
+echo ""
 echo "========================================"
+echo ""
 
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
@@ -142,7 +146,9 @@ else
 	echo "🆗️ Path found: $WP_PPM_DESTINATION_PATH"
 fi
 
+echo ""
 echo "========================================"
+echo ""
 
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
@@ -160,9 +166,11 @@ else
   git checkout "$GITHUB_HEAD_REF"
 fi
 
+echo ""
 echo "========================================"
 echo "== Generating Files ===================="
 echo "========================================"
+echo ""
 
 # Maybe generate POT file.
 if [ "$WP_PPM_GENERATE_POT" == true ]; then
@@ -170,6 +178,7 @@ if [ "$WP_PPM_GENERATE_POT" == true ]; then
   echo "wp i18n make-pot ======================="
 	wp i18n make-pot . "$WP_PPM_POT_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
   echo "========================================"
+  echo ""
 
 	# Maybe add file to repository.
 	if [ "$(git status "$WP_PPM_POT_PATH" --porcelain)" != "" ]; then
@@ -183,7 +192,9 @@ else
 	echo "⏭ Skipping generating the .pot file"
 fi
 
+echo ""
 echo "========================================"
+echo ""
 
 # Maybe generate PO file.
 if [ "$WP_PPM_GENERATE_PO" == true ]; then
@@ -191,6 +202,7 @@ if [ "$WP_PPM_GENERATE_PO" == true ]; then
   echo "wp i18n make-pot ======================="
 	wp i18n make-pot . "$WP_PPM_PO_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
   echo "========================================"
+  echo ""
 
 	# Maybe add file to repository.
 	if [ "$(git status "$WP_PPM_PO_PATH" --porcelain)" != "" ]; then
@@ -204,7 +216,9 @@ else
 	echo "⏭ Skipping generating the .po file"
 fi
 
+echo ""
 echo "========================================"
+echo ""
 
 # Maybe generate MO file.
 if [ "$WP_PPM_GENERATE_MO" == true ]; then
@@ -212,6 +226,7 @@ if [ "$WP_PPM_GENERATE_MO" == true ]; then
   echo "wp i18n make-mo ========================"
 	wp i18n make-mo "$WP_PPM_PO_PATH" "$WP_PPM_DESTINATION_PATH" --allow-root --color
   echo "========================================"
+  echo ""
 
 	# Maybe add file to repository.
 	if [ "$(git status "$WP_PPM_MO_PATH" --porcelain)" != "" ]; then
@@ -225,9 +240,11 @@ else
 	echo "⏭ Skipping generating the .mo file"
 fi
 
+echo ""
 echo "========================================"
 echo "== Generating Language Packs ==========="
 echo "========================================"
+echo ""
 
 # Use nullglob in case there are no matching files.
 shopt -s nullglob
@@ -239,12 +256,17 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
 
   echo "ℹ️ Found $WP_PPM_LANG_PACKS_COUNT language pack(s) to generate"
 
+  echo ""
+  echo "========================================"
+  echo ""
+
   if [ "$WP_PPM_LANG_PACKS_COUNT" != 0 ]; then
     for WP_PPM_LANG_PACK_PO in "${WP_PPM_LANG_PACKS[@]}"; do
       echo "🔨 Generating the language pack .po: $WP_PPM_LANG_PACK_PO"
       echo "wp i18n make-pot ======================="
       wp i18n make-pot . "$WP_PPM_LANG_PACK_PO" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
       echo "========================================"
+      echo ""
 
       # Maybe add file to repository.
       if [ "$(git status "$WP_PPM_LANG_PACK_PO" --porcelain)" != "" ]; then
@@ -255,7 +277,9 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
         echo "🆗️ No changes made to the language pack .po file"
       fi
 
+      echo ""
       echo "========================================"
+      echo ""
 
       WP_PPM_LANG_PACK_MO="${WP_PPM_LANG_PACK_PO%.po}.mo"
 
@@ -263,6 +287,7 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       echo "wp i18n make-mo ========================"
       wp i18n make-mo "$WP_PPM_LANG_PACK_PO" "$WP_PPM_DESTINATION_PATH" --allow-root --color
       echo "========================================"
+      echo ""
 
       # Maybe add file to repository.
       if [ "$(git status "$WP_PPM_LANG_PACK_MO" --porcelain)" != "" ]; then
@@ -274,10 +299,11 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       fi
 
       echo "========================================"
+      echo ""
     done
   fi
 else
-	echo "⏭ Skipping generating the language packs"
+	echo "⏭ Skipping language pack generation"
 fi
 
 echo "========================================"
