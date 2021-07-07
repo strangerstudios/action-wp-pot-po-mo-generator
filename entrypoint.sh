@@ -192,7 +192,7 @@ fi
 # Maybe generate MO file.
 if [ "$WP_PPM_GENERATE_MO" == true ]; then
 	echo "🔨 Generating the .mo file: $WP_PPM_MO_PATH"
-	wp i18n make-mo "$WP_PPM_PO_PATH" "$WP_PPM_MO_PATH" --allow-root --color
+	wp i18n make-mo "$WP_PPM_PO_PATH" "$WP_PPM_DESTINATION_PATH" --allow-root --color
 
 	# Maybe add file to repository.
 	if [ "$(git status "$WP_PPM_MO_PATH" --porcelain)" != "" ]; then
@@ -233,7 +233,7 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       WP_PPM_LANG_PACK_MO="${WP_PPM_LANG_PACK_PO%.po}.mo"
 
       echo "🔨 Generating the language pack .mo: $WP_PPM_LANG_PACK_MO"
-      wp i18n make-mo "$WP_PPM_LANG_PACK_PO" "$WP_PPM_LANG_PACK_MO" --allow-root --color
+      wp i18n make-mo "$WP_PPM_LANG_PACK_PO" "$WP_PPM_DESTINATION_PATH" --allow-root --color
 
       # Maybe add file to repository.
       if [ "$(git status "$WP_PPM_LANG_PACK_MO" --porcelain)" != "" ]; then
