@@ -28,6 +28,10 @@ To get started, you will want to copy the contents of one of these examples into
 
 ## Example Workflow File (Pushes)
 
+### Super simple workflow
+
+This only generates the .pot file in the /languages folder.
+
 ```yml
 name: Generate Translations
 on:
@@ -41,7 +45,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: WordPress POT/PO/MO Generator
-      uses: strangerstudios/action-wp-pot-po-generator@main
+      uses: strangerstudios/action-wp-pot-po-mo-generator@main
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+### Customize certain options
+
+```yml
+name: Generate Translations
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  generate-translations:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: WordPress POT/PO/MO Generator
+      uses: strangerstudios/action-wp-pot-po-mo-generator@main
       with:
         destination_path: './languages'
         slug: 'SLUG_OF_PLUGIN_OR_THEME'
@@ -63,7 +87,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: WordPress POT/PO/MO Generator
-      uses: strangerstudios/action-wp-pot-po-generator@main
+      uses: strangerstudios/action-wp-pot-po-mo-generator@main
       with:
         destination_path: './languages'
         slug: 'SLUG_OF_PLUGIN_OR_THEME'
