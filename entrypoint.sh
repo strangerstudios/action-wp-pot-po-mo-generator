@@ -84,7 +84,9 @@ WP_PPM_MO_PATH="$WP_PPM_DESTINATION_PATH/$WP_PPM_TEXT_DOMAIN.mo"
 WP_PPM_LANG_PACKS_BASE_PATH="$WP_PPM_DESTINATION_PATH/$WP_PPM_TEXT_DOMAIN"
 
 echo "========================================"
-echo "======== Language File Creator ========="
+echo "========================================"
+echo "== WP POT/PO/MO Generator =============="
+echo "========================================"
 echo "========================================"
 
 # Output information from this run.
@@ -129,6 +131,7 @@ fi
 echo "ℹ️ WP_PPM_REMOTE: $WP_PPM_REMOTE"
 echo "ℹ️ GITHUB_REF: $GITHUB_REF"
 echo "ℹ️ GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
+echo "========================================"
 
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
@@ -138,6 +141,8 @@ if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
 else
 	echo "🆗️ Path found: $WP_PPM_DESTINATION_PATH"
 fi
+
+echo "========================================"
 
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
@@ -154,6 +159,10 @@ else
   git config "branch.$GITHUB_HEAD_REF.merge" "refs/heads/$GITHUB_HEAD_REF"
   git checkout "$GITHUB_HEAD_REF"
 fi
+
+echo "========================================"
+echo "== Generating Files ===================="
+echo "========================================"
 
 # Maybe generate POT file.
 if [ "$WP_PPM_GENERATE_POT" == true ]; then
@@ -172,6 +181,8 @@ else
 	echo "⏭ Skipping generating the .pot file"
 fi
 
+echo "========================================"
+
 # Maybe generate PO file.
 if [ "$WP_PPM_GENERATE_PO" == true ]; then
 	echo "🔨 Generating the .po file: $WP_PPM_PO_PATH"
@@ -189,6 +200,8 @@ else
 	echo "⏭ Skipping generating the .po file"
 fi
 
+echo "========================================"
+
 # Maybe generate MO file.
 if [ "$WP_PPM_GENERATE_MO" == true ]; then
 	echo "🔨 Generating the .mo file: $WP_PPM_MO_PATH"
@@ -205,6 +218,10 @@ if [ "$WP_PPM_GENERATE_MO" == true ]; then
 else
 	echo "⏭ Skipping generating the .mo file"
 fi
+
+echo "========================================"
+echo "== Generating Language Packs ==========="
+echo "========================================"
 
 # Use nullglob in case there are no matching files.
 shopt -s nullglob
@@ -243,11 +260,17 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       else
         echo "🆗️ No changes made to the language pack .mo file"
       fi
+
+      echo "========================================"
     done
   fi
 else
 	echo "⏭ Skipping generating the language packs"
 fi
+
+echo "========================================"
+echo "== Git ================================="
+echo "========================================"
 
 # Commit the changes.
 echo "🔼 Committing and pushing change(s) to repository"
