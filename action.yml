@@ -1,0 +1,54 @@
+name: 'WordPress POT/PO/MO Generator'
+description: 'Generates .pot, .po, and .mo files for a WordPress plugin or theme'
+author: 'strangerstudios'
+inputs:
+  destination_path:
+    description: 'Destination path to save generated files'
+    default: './languages'
+    required: false
+  slug:
+    description: 'Plugin or theme slug. Defaults to the GitHub repository name.'
+    required: false
+  text_domain:
+    description: 'Text domain to look for in the source code. Defaults to the plugin or theme slug.'
+    required: false
+  generate_pot:
+    description: 'Whether to generate the .pot file. Defaults to 1.'
+    default: '1'
+    required: false
+  generate_po:
+    description: 'Whether to generate the .po file. Defaults to 0.'
+    default: '0'
+    required: false
+  generate_mo:
+    description: 'Whether to generate the .mo file. Defaults to 0.'
+    default: '0'
+    required: false
+  generate_lang_packs:
+    description: 'Whether to generate the .po/.mo language packs. Defaults to 0.'
+    default: '0'
+    required: false
+  merge_changes:
+    description: 'Whether to merge changes with existing files. Defaults to 0.'
+    default: '0'
+    required: false
+  headers:
+    description: 'Additional headers in JSON format to use when generating files. Defaults to empty.'
+    default: '{}'
+    required: false
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.destination_path }}
+    - ${{ inputs.slug }}
+    - ${{ inputs.text_domain }}
+    - ${{ inputs.generate_pot }}
+    - ${{ inputs.generate_po }}
+    - ${{ inputs.generate_mo }}
+    - ${{ inputs.generate_lang_packs }}
+    - ${{ inputs.merge_changes }}
+    - ${{ inputs.headers }}
+branding:
+  icon: 'file-text'
+  color: 'blue'
