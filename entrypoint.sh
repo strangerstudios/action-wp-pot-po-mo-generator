@@ -137,7 +137,7 @@ echo ""
 echo "========================================"
 echo ""
 
-echo "Checking to see if destination path exists..."
+echo "::group::Checking destination path"
 
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
@@ -148,15 +148,15 @@ else
 	echo "🆗️ Path found: $WP_PPM_DESTINATION_PATH"
 fi
 
-echo ""
-echo "========================================"
-echo ""
+echo "::endgroup::"
+
+echo "Setting git config..."
 
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-echo "Determining if we need to checkout..."
+echo "::group::Making sure we are on the correct checkout"
 
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
@@ -170,11 +170,9 @@ else
   git checkout "$GITHUB_HEAD_REF"
 fi
 
-echo ""
-echo "========================================"
-echo "== Generating Files ===================="
-echo "========================================"
-echo ""
+echo "::endgroup::"
+
+echo "::group::Generating Files"
 
 # Maybe generate POT file.
 if [ "$WP_PPM_GENERATE_POT" == true ]; then
@@ -262,11 +260,9 @@ else
 	echo "⏭ Skipping generating the .mo file"
 fi
 
-echo ""
-echo "========================================"
-echo "== Generating Language Packs ==========="
-echo "========================================"
-echo ""
+echo "::endgroup::"
+
+echo "::group::Generating Language Packs"
 
 # Use nullglob in case there are no matching files.
 shopt -s nullglob
@@ -341,11 +337,9 @@ else
 	echo "⏭ Skipping language pack generation"
 fi
 
-echo ""
-echo "========================================"
-echo "== Git ================================="
-echo "========================================"
-echo ""
+echo "::endgroup::"
+
+echo "::group::Doing Git things with Git"
 
 # Commit the changes.
 echo "🔼 Committing and pushing change(s) to repository"
@@ -378,6 +372,10 @@ echo "========================================"
 echo ""
 
 echo "✅ All changes committed and pushed to repository"
+
+echo "::endgroup::"
+
+echo "✅ Completed successfully"
 
 # Successful run.
 exit 0
