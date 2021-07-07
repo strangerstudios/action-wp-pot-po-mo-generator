@@ -145,6 +145,7 @@ git config --global user.email "41898282+github-actions[bot]@users.noreply.githu
 
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
+  echo "🆗️ Git already checked out to correct branch"
 else
   # Checkout to PR branch
   echo "🔨 Fetching remote and checking out"
