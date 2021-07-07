@@ -125,15 +125,10 @@ if [ "$GITHUB_EVENT_NAME" == "pull_request" ]; then
 	echo "ℹ️ WP_PPM_CAN_MODIFY_PR: $WP_PPM_CAN_MODIFY_PR"
 fi
 
-# Handle manual dispatches and other cases where branch is not set.
-if [ -z "$GITHUB_HEAD_REF" ]; then
-  # Set the head ref var.
-  GITHUB_HEAD_REF=$GITHUB_REF
-fi
-
 # Output more information that we have.
 echo "ℹ️ WP_PPM_REMOTE: $WP_PPM_REMOTE"
-echo "ℹ️ BRANCH: $GITHUB_HEAD_REF"
+echo "ℹ️ GITHUB_REF: $GITHUB_REF"
+echo "ℹ️ GITHUB_HEAD_REF: $GITHUB_HEAD_REF"
 
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
@@ -148,12 +143,16 @@ fi
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-# Checkout to PR branch
-echo "🔨 Fetching remote and checking out"
-git fetch "$WP_PPM_REMOTE" "$GITHUB_HEAD_REF:$GITHUB_HEAD_REF"
-git config "branch.$GITHUB_HEAD_REF.remote" "$WP_PPM_REMOTE"
-git config "branch.$GITHUB_HEAD_REF.merge" "refs/heads/$GITHUB_HEAD_REF"
-git checkout "$GITHUB_HEAD_REF"
+if [ -z "$GITHUB_HEAD_REF" ]; then
+  # It's already checked out for manual dispatches and other cases where branch is not set.
+else
+  # Checkout to PR branch
+  echo "🔨 Fetching remote and checking out"
+
+  git config "branch.$GITHUB_HEAD_REF.remote" "$WP_PPM_REMOTE"
+  git config "branch.$GITHUB_HEAD_REF.merge" "refs/heads/$GITHUB_HEAD_REF"
+  git checkout "$GITHUB_HEAD_REF"
+fi
 
 # Maybe generate POT file.
 if [ "$WP_PPM_GENERATE_POT" == true ]; then
