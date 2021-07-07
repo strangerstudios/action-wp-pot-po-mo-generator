@@ -74,4 +74,4 @@ jobs:
 
 ## Credits
 
-This action is based on [this script](https://gist.github.com/ipokkel/e67c4e6133d58ab39048fbed6e47f8bc) by Theunis Coetzee (@ipokkel) and [this action](https://github.com/iamdharmesh/action-wordpress-pot-generator) by Dharmesh Patel (@iamdharmesh)
+This action is based on [this script](https://gist.github.com/ipokkel/e67c4e6133d58ab39048fbed6e47f8bc) by Theunis Coetzee ([@ipokkel](https://github.com/ipokkel)) and [this action](https://github.com/iamdharmesh/action-wordpress-pot-generator) by Dharmesh Patel ([@iamdharmesh](https://github.com/iamdharmesh))
