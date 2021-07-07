@@ -154,11 +154,15 @@ echo "Setting git config..."
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-echo "Making sure we are on the correct checkout..."
+echo "::group::Setting up repo..."
 
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
   echo "🆗️ Git already checked out to correct branch"
+
+  echo ""
+  echo "== Running: git pull ==================="
+  echo ""
 
   # Fetch the latest from the branch.
   git pull
@@ -168,8 +172,15 @@ else
 
   git config "branch.$GITHUB_HEAD_REF.remote" "$WP_PPM_REMOTE"
   git config "branch.$GITHUB_HEAD_REF.merge" "refs/heads/$GITHUB_HEAD_REF"
+
+  echo ""
+  echo "== Running: git checkout ==============="
+  echo ""
+
   git checkout "$GITHUB_HEAD_REF"
 fi
+
+echo "::endgroup::"
 
 echo "::group::Generating Files"
 
