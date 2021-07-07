@@ -175,8 +175,14 @@ echo ""
 # Maybe generate POT file.
 if [ "$WP_PPM_GENERATE_POT" == true ]; then
 	echo "🔨 Generating the .pot file: $WP_PPM_POT_PATH"
-  echo "wp i18n make-pot ======================="
+
+  echo ""
+  echo "== Running: wp i18n make-pot ==========="
+  echo ""
+
 	wp i18n make-pot . "$WP_PPM_POT_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
+
+  echo ""
   echo "========================================"
   echo ""
 
@@ -199,8 +205,14 @@ echo ""
 # Maybe generate PO file.
 if [ "$WP_PPM_GENERATE_PO" == true ]; then
 	echo "🔨 Generating the .po file: $WP_PPM_PO_PATH"
-  echo "wp i18n make-pot ======================="
+
+  echo ""
+  echo "== Running: wp i18n make-pot ==========="
+  echo ""
+
 	wp i18n make-pot . "$WP_PPM_PO_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
+
+  echo ""
   echo "========================================"
   echo ""
 
@@ -223,8 +235,14 @@ echo ""
 # Maybe generate MO file.
 if [ "$WP_PPM_GENERATE_MO" == true ]; then
 	echo "🔨 Generating the .mo file: $WP_PPM_MO_PATH"
-  echo "wp i18n make-mo ========================"
+
+  echo ""
+  echo "== Running: wp i18n make-mo ============"
+  echo ""
+
 	wp i18n make-mo "$WP_PPM_PO_PATH" "$WP_PPM_DESTINATION_PATH" --allow-root --color
+
+  echo ""
   echo "========================================"
   echo ""
 
@@ -263,8 +281,14 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
   if [ "$WP_PPM_LANG_PACKS_COUNT" != 0 ]; then
     for WP_PPM_LANG_PACK_PO in "${WP_PPM_LANG_PACKS[@]}"; do
       echo "🔨 Generating the language pack .po: $WP_PPM_LANG_PACK_PO"
-      echo "wp i18n make-pot ======================="
+
+      echo ""
+      echo "== Running: wp i18n make-pot ==========="
+      echo ""
+
       wp i18n make-pot . "$WP_PPM_LANG_PACK_PO" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
+
+      echo ""
       echo "========================================"
       echo ""
 
@@ -284,8 +308,14 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       WP_PPM_LANG_PACK_MO="${WP_PPM_LANG_PACK_PO%.po}.mo"
 
       echo "🔨 Generating the language pack .mo: $WP_PPM_LANG_PACK_MO"
-      echo "wp i18n make-mo ========================"
+
+      echo ""
+      echo "== Running: wp i18n make-mo ============"
+      echo ""
+
       wp i18n make-mo "$WP_PPM_LANG_PACK_PO" "$WP_PPM_DESTINATION_PATH" --allow-root --color
+
+      echo ""
       echo "========================================"
       echo ""
 
@@ -298,6 +328,7 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
         echo "🆗️ No changes made to the language pack .mo file"
       fi
 
+      echo ""
       echo "========================================"
       echo ""
     done
