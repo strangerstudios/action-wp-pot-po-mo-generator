@@ -137,7 +137,7 @@ echo ""
 echo "========================================"
 echo ""
 
-echo "::group::Checking destination path"
+echo "Checking destination path..."
 
 # Maybe create the destination path.
 if [ ! -d "$WP_PPM_DESTINATION_PATH" ]; then
@@ -148,15 +148,13 @@ else
 	echo "🆗️ Path found: $WP_PPM_DESTINATION_PATH"
 fi
 
-echo "::endgroup::"
-
 echo "Setting git config..."
 
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-echo "::group::Making sure we are on the correct checkout"
+echo "Making sure we are on the correct checkout..."
 
 if [ -z "$GITHUB_HEAD_REF" ]; then
   # It's already checked out for manual dispatches and other cases where branch is not set.
@@ -169,8 +167,6 @@ else
   git config "branch.$GITHUB_HEAD_REF.merge" "refs/heads/$GITHUB_HEAD_REF"
   git checkout "$GITHUB_HEAD_REF"
 fi
-
-echo "::endgroup::"
 
 echo "::group::Generating Files"
 
@@ -274,12 +270,12 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
 
   echo "ℹ️ Found $WP_PPM_LANG_PACKS_COUNT language pack(s) to generate"
 
-  echo ""
-  echo "========================================"
-  echo ""
-
   if [ "$WP_PPM_LANG_PACKS_COUNT" != 0 ]; then
     for WP_PPM_LANG_PACK_PO in "${WP_PPM_LANG_PACKS[@]}"; do
+      echo ""
+      echo "========================================"
+      echo ""
+
       echo "🔨 Generating the language pack .po: $WP_PPM_LANG_PACK_PO"
 
       echo ""
@@ -327,10 +323,6 @@ if [ "$WP_PPM_GENERATE_LANG_PACKS" != "" ]; then
       else
         echo "🆗️ No changes made to the language pack .mo file"
       fi
-
-      echo ""
-      echo "========================================"
-      echo ""
     done
   fi
 else
@@ -349,10 +341,6 @@ echo "== Running: git commit ================="
 echo ""
 
 git commit --allow-empty -m "🔄 Regenerate translation files"
-
-echo ""
-echo "========================================"
-echo ""
 
 echo ""
 echo "== Running: git push ==================="
