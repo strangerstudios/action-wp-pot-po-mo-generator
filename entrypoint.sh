@@ -192,7 +192,7 @@ if [ "$WP_PPM_GENERATE_POT" == true ]; then
   echo "== Running: wp i18n make-pot ==========="
   echo ""
 
-	wp i18n make-pot . "$WP_PPM_POT_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" $WP_PPM_MERGE_CHANGES --allow-root --color
+	wp i18n make-pot . "$WP_PPM_POT_PATH" --domain="$WP_PPM_TEXT_DOMAIN" --slug="$WP_PPM_SLUG" --headers="$WP_PPM_HEADERS" --allow-root --color
 
   echo ""
   echo "========================================"
