@@ -153,6 +153,7 @@ echo "Setting git config..."
 # Setup Git config.
 git config --global user.name "WordPress POT/PO/MO Generator"
 git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+git config --global --add safe.directory /github/workspace
 
 echo "::group::Setting up repo..."
 
