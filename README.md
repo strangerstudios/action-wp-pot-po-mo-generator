@@ -38,12 +38,13 @@ on:
   push:
     branches:
       - develop
-
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
   generate-translations:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: WordPress POT/PO/MO Generator
       uses: strangerstudios/action-wp-pot-po-mo-generator@main
       env:
@@ -58,12 +59,13 @@ on:
   push:
     branches:
       - develop
-
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
   generate-translations:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: WordPress POT/PO/MO Generator
       uses: strangerstudios/action-wp-pot-po-mo-generator@main
       with:
@@ -81,11 +83,13 @@ For more details of how to use this action on demand, read up on [Manual Trigger
 ```yml
 name: Generate Translations
 on: workflow_dispatch
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 jobs:
   generate-translations:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v4
     - name: WordPress POT/PO/MO Generator
       uses: strangerstudios/action-wp-pot-po-mo-generator@main
       with:
